@@ -1,0 +1,74 @@
+/* TopicsList.scss */
+.topics {
+  padding: 2rem;
+
+  &__heading {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+
+  &__table-wrapper {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 400px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &__row {
+    &--header {
+      background-color: #f0f4f8;
+
+      .topics__cell {
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        text-align: center;
+        color: #333;
+      }
+    }
+
+    &:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    &:hover {
+      background-color: #f5faff;
+    }
+
+    & .topics__cell {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e0e0e0;
+      
+    }
+  }
+
+  &__cell {
+    /* Cell-level styles if needed */
+  }
+
+  &__btn {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    color: #4a90e2;
+    background-color: #eef6ff;
+    border: 1px solid #4a90e2;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: #4a90e2;
+      color: #fff;
+    }
+
+    &--sm {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.85rem;
+    }
+  }
+}

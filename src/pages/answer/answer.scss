@@ -1,0 +1,60 @@
+/* AnswersList.scss */
+.answers {
+  padding: 1.5rem;
+
+  &__heading {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  &__table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 600px;
+  }
+
+  &__thead {
+    background-color: #f0f4f8;
+  }
+
+  &__row {
+    &:nth-child(even) {
+      background-color: #fafafa;
+    }
+    &:hover {
+      background-color: #eef6ff;
+    }
+  }
+
+  &__cell {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+    color: #444;
+  }
+
+  &__btn {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    color: #4a90e2;
+    background-color: #f0faff;
+    border: 1px solid #4a90e2;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: #4a90e2;
+      color: #fff;
+    }
+  }
+}

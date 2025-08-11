@@ -1,0 +1,80 @@
+/* RegisterForm.scss */
+
+.register-form {
+  &__box {
+    max-width: 380px;
+    margin: 5rem auto;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input-group {
+    position: relative;
+    margin-bottom: 1.75rem;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.85rem 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    background: transparent;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  &__label {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.5rem;
+    color: #888;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.3s;
+  }
+
+  &__input:focus + &__label,
+  &__input:not(:placeholder-shown) + &__label {
+    transform: translateY(-1.6rem);
+    font-size: 0.85rem;
+    color: #4a90e2;
+  }
+
+  &__input:focus {
+    border-color: #4a90e2;
+  }
+
+  &__button {
+    margin-top: 0.5rem;
+    padding: 0.85rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #4a90e2, #50e3c2);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.2s;
+
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+  }
+}

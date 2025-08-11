@@ -1,0 +1,704 @@
+// ============================================
+// VARIABLES
+// ============================================
+$primary-color: #3b82f6;
+$secondary-color: #8b5cf6;
+$accent-color: #fbbf24;
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$danger-color: #ef4444;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+$white: #ffffff;
+
+// Breakpoints
+$mobile: 640px;
+$tablet: 768px;
+$desktop: 1024px;
+$large: 1280px;
+
+// Z-index layers
+$z-header: 1000;
+$z-dropdown: 1100;
+$z-overlay: 1200;
+
+// ============================================
+// MIXINS
+// ============================================
+@mixin transition($properties: all, $duration: 0.3s, $easing: ease-in-out) {
+  transition: $properties $duration $easing;
+}
+
+@mixin card-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+@mixin card-shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+@mixin card-shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  @include transition();
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  }
+}
+
+@mixin container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  @media (min-width: $tablet) {
+    padding: 0 2rem;
+  }
+}
+
+// ============================================
+// BASE STYLES
+// ============================================
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: $gray-900;
+  background-color: $white;
+}
+
+// ============================================
+// LAYOUT COMPONENT
+// ============================================
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// ============================================
+// HEADER COMPONENT
+// ============================================
+.header {
+  position: sticky;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid $gray-200;
+  z-index: $z-header;
+  @include transition(all, 0.3s);
+
+  &--scrolled {
+    @include card-shadow;
+  }
+
+  &__container {
+    @include container;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+
+    @media (min-width: $tablet) {
+      height: 5rem;
+    }
+  }
+
+  &__logo {
+    flex-shrink: 0;
+  }
+
+  &__nav {
+    &--desktop {
+      display: none;
+
+      @media (min-width: $desktop) {
+        display: block;
+      }
+    }
+
+    &--mobile {
+      position: fixed;
+      top: 4rem;
+      left: 0;
+      right: 0;
+      background-color: $white;
+      @include card-shadow-lg;
+      border-top: 1px solid $gray-200;
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      @include transition(all, 0.3s);
+
+      @media (min-width: $tablet) {
+        top: 5rem;
+        max-height: calc(100vh - 5rem);
+      }
+
+      @media (min-width: $desktop) {
+        display: none;
+      }
+
+      &.header__nav--open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__auth {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    @media (max-width: $desktop ) {
+      display: none;
+    }
+  }
+
+  &__profile-dropdown {
+    position: relative;
+  }
+
+  &__mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.5rem;
+    color: $gray-700;
+    cursor: pointer;
+    @include transition();
+
+    &:hover {
+      background-color: $gray-100;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px $primary-color;
+    }
+
+    @media (min-width: $desktop) {
+      display: none;
+    }
+  }
+
+  &__overlay {
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: $z-overlay;
+
+    @media (min-width: $tablet) {
+      top: 5rem;
+    }
+
+    @media (min-width: $desktop) {
+      display: none;
+    }
+  }
+}
+
+// ============================================
+// LOGO COMPONENT
+// ============================================
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: $gray-900;
+  font-weight: 700;
+  font-size: 1.25rem;
+  @include transition();
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &__image {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
+
+  &__text {
+    @media (max-width: $mobile) {
+      display: none;
+    }
+  }
+}
+
+// ============================================
+// NAVIGATION COMPONENT
+// ============================================
+.nav {
+  &__menu {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+
+    &--mobile {
+      flex-direction: column;
+      padding: 1rem 0;
+    }
+
+    @media (min-width: $desktop) {
+      gap: 1rem;
+    }
+  }
+
+  &__item {
+    position: relative;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: $gray-700;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    @include transition();
+    position: relative;
+
+    &:hover {
+      background-color: $gray-100;
+      color: $gray-900;
+    }
+
+    &.active {
+      color: $primary-color;
+      background-color: rgba(59, 130, 246, 0.1);
+    }
+
+    &--primary {
+      background-color: $primary-color;
+      color: $white;
+
+      &:hover {
+        background-color: #2563eb;
+      }
+    }
+
+    &--danger {
+      color: $danger-color;
+
+      &:hover {
+        background-color: rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    @media (max-width: $desktop ) {
+      padding: 1rem 1.5rem;
+      border-radius: 0;
+    }
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: $gray-200;
+    margin: 0.5rem 1.5rem;
+  }
+}
+
+// ============================================
+// PROFILE DROPDOWN
+// ============================================
+.profile {
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    @include transition();
+
+    &:hover {
+      background-color: $gray-100;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px $primary-color;
+    }
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background-color: $gray-200;
+    border-radius: 50%;
+    color: $gray-600;
+  }
+
+  &__chevron {
+    color: $gray-500;
+    @include transition(transform);
+
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 12rem;
+    background-color: $white;
+    border: 1px solid $gray-200;
+    border-radius: 0.75rem;
+    @include card-shadow-lg;
+    padding: 0.5rem 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.5rem);
+    @include transition(all, 0.2s);
+    z-index: $z-dropdown;
+
+    &--open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+}
+
+.dropdown {
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: $gray-700;
+    font-size: 0.875rem;
+    font-weight: 500;
+    @include transition();
+
+    &:hover {
+      background-color: $gray-50;
+    }
+
+    &--danger {
+      color: $danger-color;
+
+      &:hover {
+        background-color: rgba(239, 68, 68, 0.05);
+      }
+    }
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: $gray-200;
+    margin: 0.5rem 0;
+    border: none;
+  }
+}
+
+// ============================================
+// AUTH BUTTONS
+// ============================================
+.auth {
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.btn {
+  @include button-base;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+
+  &--ghost {
+    background-color: transparent;
+    color: $gray-700;
+    border: 1px solid $gray-300;
+
+    &:hover {
+      background-color: $gray-50;
+      border-color: $gray-400;
+    }
+  }
+
+  &--primary {
+    background-color: $primary-color;
+    color: $white;
+
+    &:hover {
+      background-color: #2563eb;
+    }
+  }
+
+  @media (min-width: $tablet) {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+// ============================================
+// MAIN CONTENT
+// ============================================
+.main {
+  flex: 1;
+  min-height: calc(100vh - 4rem - 200px); // Account for header and footer
+  
+  @media (min-width: $tablet) {
+    min-height: calc(100vh - 5rem - 200px);
+  }
+}
+
+// ============================================
+// FOOTER COMPONENT
+// ============================================
+.footer {
+  background-color: $gray-900;
+  color: $white;
+  margin-top: auto;
+
+  &__container {
+    @include container;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+
+    @media (min-width: $tablet) {
+      grid-template-columns: 2fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+
+    img {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.375rem;
+      object-fit: cover;
+    }
+  }
+
+  &__description {
+    color: $gray-400;
+    max-width: 24rem;
+    line-height: 1.6;
+  }
+
+  &__links {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+
+    @media (min-width: $mobile) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__column {
+    h3 {
+      color: $white;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      li {
+        a {
+          color: $gray-400;
+          text-decoration: none;
+          font-size: 0.875rem;
+          @include transition();
+
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid $gray-800;
+    padding-top: 2rem;
+    text-align: center;
+
+    p {
+      color: $gray-400;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__title {
+    color: $white;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+// ============================================
+// RESPONSIVE UTILITIES
+// ============================================
+@media (max-width: $mobile ) {
+  .hide-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: $tablet ) {
+  .hide-tablet {
+    display: none;
+  }
+}
+
+@media (max-width: $desktop) {
+  .hide-desktop {
+    display: none;
+  }
+}
+
+// ============================================
+// ANIMATIONS
+// ============================================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-0.5rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(0.5rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// ============================================
+// ACCESSIBILITY
+// ============================================
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Focus visible for better keyboard navigation
+.focus-visible {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+// ============================================
+// DARK MODE SUPPORT (Optional)
+// ============================================
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #{$gray-900};
+    --text-color: #{$white};
+    --border-color: #{$gray-700};
+  }
+
+  // Add dark mode styles if needed
+  // .header {
+  //   background-color: rgba(17, 24, 39, 0.95);
+  //   border-bottom-color: var(--border-color);
+  // }
+}
